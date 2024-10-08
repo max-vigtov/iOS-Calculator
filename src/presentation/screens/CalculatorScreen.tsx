@@ -8,6 +8,7 @@ export const CalculatorScreen = () => {
   const { 
     number,
     prevNumber,
+    formula,
     buildNumber,
     toggleSign,
     clean,
@@ -15,7 +16,8 @@ export const CalculatorScreen = () => {
     divideOperation,
     subtractOperation,
     multiplyOperation,
-    addOperation,     
+    addOperation,
+    calculateResult
   } = useCalculator();
 
   return (
@@ -25,14 +27,19 @@ export const CalculatorScreen = () => {
                 adjustsFontSizeToFit
                 numberOfLines={ 1 }
                 style={ styles.mainResult }>
-                { number }
+                { formula }
             </Text>
-            <Text 
-                adjustsFontSizeToFit
-                numberOfLines={ 1 }
-                style={ styles.subResult }>
-                { ( prevNumber === '0' ? '' : prevNumber) }
-            </Text>
+
+            {
+                ( formula === prevNumber )
+                ? <Text style={ styles.subResult }> </Text>
+                : <Text 
+                    adjustsFontSizeToFit
+                    numberOfLines={ 1 }
+                    style={ styles.subResult }>
+                    { prevNumber }
+                  </Text>
+            }
         </View>    
 
         <View style={ styles.row }>
@@ -66,7 +73,7 @@ export const CalculatorScreen = () => {
         <View style={ styles.row }>
             <CalculatorButton onPress={ () => buildNumber('0') } label="0" doubleSize/>
             <CalculatorButton onPress={ () => buildNumber('.') } label="."/>
-            <CalculatorButton onPress={ () => console.log('=') } label="=" color={ colors.orange}/>
+            <CalculatorButton onPress={ calculateResult } label="=" color={ colors.orange}/>
         </View>        
     </View>
   )
